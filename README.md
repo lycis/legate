@@ -3,22 +3,37 @@ Legate is a webservice forwarder that is intertwined with [Consul](https://githu
 It forwards any HTTP requests via HTTP redirection to a service that is registered by Consul.
 
 ## Usage
-Simply start legate with a call to its command:
+Simply start legate with a call to its command `legate <consul address>'. For example this call
+may be like this:
 ```
-legate
+legate consulserver:8500 
 ```
-Any configuration will be loaded from a file called `legate.yml` in the working directory.
+
+Any configuration will be dervied from command line parameters unless `-config` is given to set a
+configuration file.
 
 ## Configuration
-Legate is configured by a file called `legate.yml` in its working directory. Example:
+Usually `legate` is configured by providing matching command line parameters:
+
+```
+-bind string
+        address and port to bind to (e.g. 127.0.0.1:80)  (default ":8080")
+-config string
+        configuration file
+-dc string
+        consul datacenter (default "dc01")
+```
+
+### File
+If Legate is configured by file the given file has to be a YAML file with the follwing structure:
+
+ Example:
 ```
 consul:
     address: consulserver:8500
     datacenter: dc01
-port: 8080
-bind: 0.0.0.0
+bind: 0.0.0.0:8080
 ```
 
 * _consul_: This section directly refers to the configuration of the Consul API. See [here](https://godoc.org/github.com/hashicorp/consul/api#Config)
-* _port_: Port to listen on for requests (default: 8080)
-* _bind_: Address to bind to (default: 0.0.0.0)
+* _bind_: Address and port to bind to (default: 0.0.0.0:8080)
