@@ -1,8 +1,10 @@
 # Legate
 Legate is a webservice forwarder that is intertwined with [Consul](https://github.com/hashicorp/consul).
 It forwards any HTTP requests via HTTP redirection to a service that is registered by Consul.
-
+i
 ## Usage
+
+### Bare Metal Execution
 Simply start legate with a call to its command `legate <consul address>'. For example this call
 may be like this:
 ```
@@ -11,6 +13,15 @@ legate consulserver:8500
 
 Any configuration will be dervied from command line parameters unless `-config` is given to set a
 configuration file.
+
+### Run from Container
+A docker container with the name `lycis/legate:latest` is avaibale at Docker Hub. It can be configured
+by using command line parameters and ran by using a command like this:
+```
+docker run -p 8080:8080 lycis/legate:latest -dc dc01 consul:8500
+```
+
+The host port 8080 can thereafter be used to access the service.
 
 ## Configuration
 Usually `legate` is configured by providing matching command line parameters:
